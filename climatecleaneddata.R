@@ -19,7 +19,8 @@ df$co2_levels <- as.factor(ifelse(df$CO2EmissionRate..mt. < 1, "Low emission rat
                  ifelse(df$CO2EmissionRate..mt. < 30, "High emission rate", "Extreme emission rate"))))
 
 #Create one new numerical variable
-lowest_co2 <- df[order(df$CO2EmissionRate..mt.), ]
+order_co2 <- order(df$CO2EmissionRate..mt.)
+lowest_co2 <- df[(order_co2), ]
 df$low_co2 <- lowest_co2$CO2EmissionRate..mt.
 df <- na.omit(df) 
 
