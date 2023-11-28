@@ -19,8 +19,13 @@ df$co2_levels <- as.factor(ifelse(df$CO2EmissionRate..mt. < 1, "Low emission rat
                  ifelse(df$CO2EmissionRate..mt. < 30, "High emission rate", "Extreme emission rate"))))
 
 #Create one new numerical variable
+lowest_co2 <- df[order(df$CO2EmissionRate..mt.), ]
+df$low_co2 <- lowest_co2$CO2EmissionRate..mt.
+df <- na.omit(df) 
 
 #Create one summarization dataframe
+df_sum <- summarize(df, avg_co2 = mean(df$CO2EmissionRate..mt.), sd_co2 = sd(df$CO2EmissionRate..mt.))
+print(df_sum)
 
 #Check types in datasets
 #str(emission_df)
