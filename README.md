@@ -5,4 +5,6 @@ In this R project, we take a look at the global average co2 intake from the year
 
 We filtered the co2 dataset to only find the means of the global co2 per year and merged this dataframe with the population dataframe by YEAR.
 
+The main csv file we used is the global_avg_data.csv
+
 We will incoparte the use of the UI, shiny, to storytell our findings.
