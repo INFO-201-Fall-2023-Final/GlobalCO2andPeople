@@ -48,7 +48,7 @@ page2_panel <- fluidPage(
   titlePanel("Average amount of oil through the years 1990 to 2021"),
   p("Write some infomration here"),
   p(""),
-  h3("Analyzing the average amount of oil through the years 1990 to 2021"),
+  h3("Examining the average oil through the years:"),
   sidebarLayout(
     sidebarPanel(
   selectInput(
@@ -59,7 +59,8 @@ page2_panel <- fluidPage(
     ),
       mainPanel(
         tableOutput(outputId = "table"),
-        plotOutput(outputId = "plot_oil")
+        plotlyOutput(outputId = "plot_oil"),
+        plotlyOutput(outputId = "bar_oil")
       )
   ),
   h4("Findings"),
@@ -85,8 +86,11 @@ server <- function(input, output){
   output$co2_pop <- renderPlotly({
     co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
     co2_pop <- ggplot(co2_pop_filter, aes(x = global_pop, y = avg_co2)) +
-      geom_point() +
-      geom_smooth(method = lm, se = FALSE)
+      geom_point(size = co2_pop_filter$avg_co2 * .01, aes(col = -avg_co2, alpha = .7)) +
+      geom_smooth(method = lm, se = FALSE) +
+      labs(
+        color = "avg_co2"
+      )
     plot(co2_pop)
   })
   
@@ -96,11 +100,22 @@ server <- function(input, output){
   })
   
   output$plot_oil <- renderPlotly({
-    oil_graph <- ggplot(global_avg_data, aes(x = Year, y = avg_oil)) +
-      geom_line() 
-    return(oil_graph)
-    plot(oil_graph)
+    #year_df <- filter(oil_data, Year == input$Years)
+    oil <- ggplot(global_df, aes(x = Year, y = avg_oil)) +
+      geom_line() +
+      geom_point(aes(col = avg_oil)) +
+      scale_color_gradient(low = "yellow", high = "red") 
+    plot(oil)
   })
+  
+  output$bar_oil <- renderPlotly({
+    year_df <- filter(oil_data, Year == input$Years)
+    oil_barchart <- ggplot(year_df, aes(x = Year, y = avg_oil)) +
+      geom_col(width = 0.2)
+    plot(oil_barchart)
+  })
+  
+  
 }
 
 shinyApp(ui = ui, server = server)
