@@ -4,11 +4,13 @@ source("CleanedDataset.R")
 
 global_df <- read.csv("global_avg_data.csv")
 
+#Home page of the App (Not yet finished)
 home_panel <- fluidPage(
   h1("Welcome to the home page!"),
   p("Write some information here")
 )
 
+#First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
   titlePanel("Global Average CO2 And Population through 1990"),
   p("Welcome to an analysis of the Global Population growth and Average CO2 Emission 
@@ -41,16 +43,19 @@ page1_panel <- fluidPage(
     indicator for rapid climate change.")
 )
 
+#Second Page of the App (Not yet finished)
 page2_panel <- fluidPage(
   h1("This is the second page"),
   p("Write some infomration here")
 )
 
+#Third Page of the App (Not yet finished)
 page3_panel <- fluidPage(
   h1("This is the third page"),
   p("Write some infomration here")
 )
 
+#Contains the pages 
 ui <- navbarPage(
   "Global CO2 and Population",
   tabPanel("Home", home_panel),
