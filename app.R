@@ -7,7 +7,7 @@ global_df <- read.csv("global_avg_data.csv")
 #Home page of the App (Not yet finished)
 home_panel <- fluidPage(
   h1("Welcome to the home page!"),
-  p("Write some information here")
+  p("We are anlayzing the chnage over time and the contrast of population and average co2")
 )
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
@@ -45,8 +45,25 @@ page1_panel <- fluidPage(
 
 #Second Page of the App (Not yet finished)
 page2_panel <- fluidPage(
-  h1("This is the second page"),
-  p("Write some infomration here")
+  titlePanel("Average amount of oil through the years 1990 to 2021"),
+  p("Write some infomration here"),
+  p(""),
+  h3("Analyzing the average amount of oil through the years 1990 to 2021"),
+  sidebarLayout(
+    sidebarPanel(
+  selectInput(
+    inputId = "Years",
+    label = "Select a year",
+    choices = global_df$Year
+     ),
+    ),
+      mainPanel(
+        tableOutput(outputId = "table"),
+        plotOutput(outputId = "plot_oil")
+      )
+  ),
+  h4("Findings"),
+  p("Write some findings here")
 )
 
 #Third Page of the App (Not yet finished)
@@ -73,6 +90,17 @@ server <- function(input, output){
     plot(co2_pop)
   })
   
+  output$table <- renderTable({
+    year_df <- filter(oil_data, Year == input$Years)
+    return(year_df)
+  })
+  
+  output$plot_oil <- renderPlotly({
+    oil_graph <- ggplot(global_avg_data, aes(x = Year, y = avg_oil)) +
+      geom_line() 
+    return(oil_graph)
+    plot(oil_graph)
+  })
 }
 
 shinyApp(ui = ui, server = server)
