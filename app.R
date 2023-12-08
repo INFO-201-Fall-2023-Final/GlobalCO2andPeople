@@ -1,4 +1,6 @@
 library(shiny)
+library(plotly)
+source("CleanedDataset.R")
 
 global_df <- read.csv("global_avg_data.csv")
 
@@ -8,8 +10,35 @@ home_panel <- fluidPage(
 )
 
 page1_panel <- fluidPage(
-  h1("This is the first page"),
-  p("Write some infomration here")
+  titlePanel("Global Average CO2 And Population through 1990"),
+  p("Welcome to an analysis of the Global Population growth and Average CO2 Emission 
+    through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
+    to examine wheter the rapid effects of climate change has been affected due to
+    our rapid population growth and co2 intake."),
+  p("Below we will analyze this through a scatterplot:"),
+  p(""),
+  h3("Examining the trend between 1990 and 2021"),
+  sidebarLayout(
+    sidebarPanel(
+      h4("Controls"),
+      sliderInput(
+        inputId = "pop_slider",
+        label = "Filter by Population",
+        min = 5,
+        max = 8,
+        value = 8
+      ),
+    ),
+    mainPanel(
+      plotlyOutput(outputId = "co2_pop"),
+    ),
+  ),
+  h4("Findings"),
+  p("Looking at our graph, there seems to be a strong linear correlation 
+    between the the global population and average co2 emissions through the past
+    31 years. This could indicate that the rapid growth in population and the need 
+    for co2 in our modern world has an almost 1:1 ratio. This could be a factor and possible
+    indicator for rapid climate change.")
 )
 
 page2_panel <- fluidPage(
@@ -31,6 +60,13 @@ ui <- navbarPage(
 )
 
 server <- function(input, output){
+  output$co2_pop <- renderPlotly({
+    co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
+    co2_pop <- ggplot(co2_pop_filter, aes(x = global_pop, y = avg_co2)) +
+      geom_point() +
+      geom_smooth(method = lm, se = FALSE)
+    plot(co2_pop)
+  })
   
 }
 
