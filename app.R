@@ -83,6 +83,7 @@ ui <- navbarPage(
 )
 
 server <- function(input, output){
+#First page bubble plot
   output$co2_pop <- renderPlotly({
     co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
     co2_pop <- ggplot(co2_pop_filter, aes(x = global_pop, y = avg_co2)) +
@@ -93,21 +94,23 @@ server <- function(input, output){
       )
     plot(co2_pop)
   })
-  
+
+#Second page table
   output$table <- renderTable({
     year_df <- filter(oil_data, Year == input$Years)
     return(year_df)
   })
-  
+
+#Second page scatterplot  
   output$plot_oil <- renderPlotly({
-    #year_df <- filter(oil_data, Year == input$Years)
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil)) +
       geom_line() +
       geom_point(aes(col = avg_oil)) +
       scale_color_gradient(low = "yellow", high = "red") 
     plot(oil)
   })
-  
+
+#Second page barchart (Specify year)  
   output$bar_oil <- renderPlotly({
     year_df <- filter(oil_data, Year == input$Years)
     oil_barchart <- ggplot(year_df, aes(x = Year, y = avg_oil)) +
