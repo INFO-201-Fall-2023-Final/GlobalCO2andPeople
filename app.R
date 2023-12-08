@@ -13,7 +13,7 @@ home_panel <- fluidPage(
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
   titlePanel("Global Average CO2 And Population through 1990"),
-  p("Welcome to an analysis of the Global Population growth and Average CO2 Emission 
+  p("This is an analysis of the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
     our rapid population growth and co2 intake."),
@@ -45,10 +45,16 @@ page1_panel <- fluidPage(
 
 #Second Page of the App (Not yet finished)
 page2_panel <- fluidPage(
-  titlePanel("Average amount of oil through the years 1990 to 2021"),
-  p("Write some infomration here"),
+  titlePanel("Average Amount of Oil Through the Years 1990-2021"),
+  p("Since the world has run on oil for the past decades and large amounts of 
+    people are realizing the harms of the oil-related industries, we wanted to investigate
+    the amounts of oil we have used. In this analysis we will take a look at the
+    average amount of oil we have used since the year 1990 and see wheter this highly
+    controversial substance has been an effect in climate change. We will also take
+    a look at co2 emission alongside oil."),
   p(""),
-  h3("Examining the average oil through the years:"),
+  h3("Examining the Average Oil Through the Years:"),
+  p(""),
   sidebarLayout(
     sidebarPanel(
   selectInput(
@@ -58,9 +64,13 @@ page2_panel <- fluidPage(
      ),
     ),
       mainPanel(
+        h5("CO2 Table"),
         tableOutput(outputId = "table"),
         plotlyOutput(outputId = "plot_oil"),
-        plotlyOutput(outputId = "bar_oil")
+#        plotlyOutput(outputId = "bar_oil")
+        p("Now lets take a look at our CO2 emissions each year and see if it follows
+          along the oil's upwards trend!"),
+        plotlyOutput(outputId = "co2_oil")
       )
   ),
   h4("Findings"),
@@ -83,6 +93,7 @@ ui <- navbarPage(
 )
 
 server <- function(input, output){
+  
 #First page bubble plot
   output$co2_pop <- renderPlotly({
     co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
@@ -101,7 +112,7 @@ server <- function(input, output){
     return(year_df)
   })
 
-#Second page scatterplot  
+#Second page scatterplot 
   output$plot_oil <- renderPlotly({
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil)) +
       geom_line() +
@@ -109,14 +120,22 @@ server <- function(input, output){
       scale_color_gradient(low = "yellow", high = "red") 
     plot(oil)
   })
+  
+#Second page scatterplot (co2 vs oil)
+  output$co2_oil <- renderPlotly({
+    co2_oil_plot <- ggplot(global_df, aes(x = avg_oil, y = avg_co2)) +
+      geom_point(aes(col = avg_co2)) +
+      scale_color_gradient(low = "yellow", high = "red") + geom_line()
+    plot(co2_oil_plot)
+  })
 
 #Second page barchart (Specify year)  
-  output$bar_oil <- renderPlotly({
-    year_df <- filter(oil_data, Year == input$Years)
-    oil_barchart <- ggplot(year_df, aes(x = Year, y = avg_oil)) +
-      geom_col(width = 0.2)
-    plot(oil_barchart)
-  })
+#  output$bar_oil <- renderPlotly({
+#    year_df <- filter(oil_data, Year == input$Years)
+#    oil_barchart <- ggplot(year_df, aes(x = Year, y = avg_oil)) +
+#      geom_col(width = 0.2)
+#    plot(oil_barchart)
+#  })
   
   
 }
