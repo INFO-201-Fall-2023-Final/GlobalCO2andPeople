@@ -1,5 +1,6 @@
 library(shiny)
 library(plotly)
+library(hrbrthemes)
 source("CleanedDataset.R")
 
 global_df <- read.csv("global_avg_data.csv")
@@ -17,7 +18,7 @@ page1_panel <- fluidPage(
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
     our rapid population growth and co2 intake."),
-  p("Below we will analyze this through a scatterplot:"),
+  p("Below we will analyze this through a bubbleplot:"),
   p(""),
   h3("Examining the trend between 1990 and 2021"),
   sidebarLayout(
@@ -79,8 +80,30 @@ page2_panel <- fluidPage(
 
 #Third Page of the App (Not yet finished)
 page3_panel <- fluidPage(
-  h1("This is the third page"),
-  p("Write some infomration here")
+  titlePanel("Comparing Other Sources of CO2 Emission"),
+  p("In this section we want to investigate more factors that relate
+    to the global CO2 emission and analyze this results to see which material
+    contributes the most to the atmosphere. The materials we will take a look at 
+    are coal, gas, cement, flaring and others."),
+  p(""),
+  h3("Examining other CO2 emitted materials: "),
+  p(""),
+  mainPanel(
+    tabsetPanel(
+      tabPanel("Coal", h4("Coal Histogram"), plotOutput(outputId = "coal_hist")),
+      
+      tabPanel("Gas", h4("Gas Histogram"), plotOutput(outputId = "gas_hist")),
+      
+      tabPanel("Cement", h4("Cement Histogram"), plotOutput(outputId = "cement_hist")),
+      
+      tabPanel("Flaring", h4("Flaring Histogram"), plotOutput(outputId = "flaring_hist")),
+      
+      tabPanel("Other Materials", h4("Other Histogram"), plotOutput(outputId = "other_hist"))
+    ),
+    p(""),
+    h4("Findings"),
+    p("Write some findings over here")
+  )
 )
 
 #Contains the pages 
@@ -114,28 +137,26 @@ server <- function(input, output){
 
 #Second page scatterplot 
   output$plot_oil <- renderPlotly({
-    oil <- ggplot(global_df, aes(x = Year, y = avg_oil)) +
+    oil <- ggplot(global_df, aes(x = Year, y = avg_oil_co2)) +
       geom_line() +
-      geom_point(aes(col = avg_oil)) +
+      geom_point(aes(col = avg_oil_co2)) +
       scale_color_gradient(low = "yellow", high = "red") 
     plot(oil)
   })
   
 #Second page scatterplot (co2 vs oil)
   output$co2_oil <- renderPlotly({
-    co2_oil_plot <- ggplot(global_df, aes(x = avg_oil, y = avg_co2)) +
+    co2_oil_plot <- ggplot(global_df, aes(x = Year, y = avg_co2)) +
       geom_point(aes(col = avg_co2)) +
       scale_color_gradient(low = "yellow", high = "red") + geom_line()
     plot(co2_oil_plot)
   })
 
-#Second page barchart (Specify year)  
-#  output$bar_oil <- renderPlotly({
-#    year_df <- filter(oil_data, Year == input$Years)
-#    oil_barchart <- ggplot(year_df, aes(x = Year, y = avg_oil)) +
-#      geom_col(width = 0.2)
-#    plot(oil_barchart)
-#  })
+#Third page (Coal)  
+  output$coal_hist <- renderPlotly({
+#    coal_oil_hist <-  ggplot(global_df, aes(x = Year, y = avg_coal_co2)) +
+#      geom_line()
+})
   
   
 }
