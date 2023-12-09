@@ -8,7 +8,8 @@ global_df <- read.csv("global_avg_data.csv")
 #Home page of the App (Not yet finished)
 home_panel <- fluidPage(
   h1("Welcome to the home page!"),
-  p("We are anlayzing the chnage over time and the contrast of population and average co2")
+  p("We are anlayzing the effects of people on the effects of CO2 emissions and other
+    related factor.")
 )
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
@@ -44,7 +45,7 @@ page1_panel <- fluidPage(
     indicator for rapid climate change.")
 )
 
-#Second Page of the App (Not yet finished)
+#Second Page of the App 
 page2_panel <- fluidPage(
   titlePanel("Average Amount of Oil Through the Years 1990-2021"),
   p("Since the world has run on oil for the past decades and large amounts of 
@@ -78,27 +79,25 @@ page2_panel <- fluidPage(
   p("Write some findings here")
 )
 
-#Third Page of the App (Not yet finished)
+#Third Page of the App 
 page3_panel <- fluidPage(
-  titlePanel("Comparing Other Sources of CO2 Emission"),
-  p("In this section we want to investigate more factors that relate
-    to the global CO2 emission and analyze this results to see which material
-    contributes the most to the atmosphere. The materials we will take a look at 
-    are coal, gas, cement, flaring and others."),
+  titlePanel("Comparing Top Emitted Countries in 2021"),
+  p("Now let's take a look at this CO2 emission problem on a specfic scale. Following
+    the trend of looking at the effects of people on the climate, we can now narrow
+    down our focus at countries that have contributed the most in the CO2 industry.
+    This page will take a look at the most recent year in the dataset, 2021, and analyze
+    the top ten countries that could be a factor in identifying the effects of climate change."),
   p(""),
-  h3("Examining other CO2 emitted materials: "),
+  h3("Examining the Countries Total Emissions (2021): "),
   p(""),
   mainPanel(
     tabsetPanel(
-      tabPanel("Coal", h4("Coal Histogram"), plotOutput(outputId = "coal_hist")),
+      tabPanel("Barplot", h4("Countries/CO2 Barplot"), plotlyOutput(outputId = "countries_bar")),
       
-      tabPanel("Gas", h4("Gas Histogram"), plotOutput(outputId = "gas_hist")),
-      
-      tabPanel("Cement", h4("Cement Histogram"), plotOutput(outputId = "cement_hist")),
-      
-      tabPanel("Flaring", h4("Flaring Histogram"), plotOutput(outputId = "flaring_hist")),
-      
-      tabPanel("Other Materials", h4("Other Histogram"), plotOutput(outputId = "other_hist"))
+      tabPanel("Table",
+               h5("2021 Top10 Table"), 
+               tableOutput(outputId = "ten_table")
+              ),
     ),
     p(""),
     h4("Findings"),
@@ -108,7 +107,7 @@ page3_panel <- fluidPage(
 
 #Contains the pages 
 ui <- navbarPage(
-  "Global CO2 and Population",
+  "Global CO2 and People",
   tabPanel("Home", home_panel),
   tabPanel("Page 1", page1_panel),
   tabPanel("Page 2", page2_panel),
@@ -152,11 +151,20 @@ server <- function(input, output){
     plot(co2_oil_plot)
   })
 
-#Third page (Coal)  
-  output$coal_hist <- renderPlotly({
-#    coal_oil_hist <-  ggplot(global_df, aes(x = Year, y = avg_coal_co2)) +
-#      geom_line()
+#Third page (barplot)  
+  output$countries_bar <- renderPlotly({
+    country_barplot <- ggplot(arrangeData, aes(x=Country, fill = Country, y=Total)) + 
+      geom_bar(stat = "identity")  +
+      scale_fill_manual(values = c("red", "blue", "green", "yellow", "orange", "purple", "lightblue", "darkgreen", "white", "gold")) +
+      theme(legend.position="none") +
+      coord_flip()
+    plot(country_barplot)
 })
+
+#Third page (Table)
+  output$ten_table <- renderTable({
+    return(arrangeData)
+  })
   
   
 }
