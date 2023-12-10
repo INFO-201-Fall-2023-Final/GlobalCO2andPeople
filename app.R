@@ -27,7 +27,7 @@ page1_panel <- fluidPage(
       h4("Controls"),
       sliderInput(
         inputId = "pop_slider",
-        label = "Filter by Population",
+        label = "Filter by Population (Billions)",
         min = 5,
         max = 8,
         value = 8
@@ -48,9 +48,9 @@ page1_panel <- fluidPage(
 #Second Page of the App 
 page2_panel <- fluidPage(
   titlePanel("Average Amount of Oil Through the Years 1990-2021"),
-  p("Since the world has run on oil for the past decades and large amounts of 
-    people are realizing the harms of the oil-related industries, we wanted to investigate
-    the amounts of oil we have used. In this analysis we will take a look at the
+  p("Since the world has become oil-dependent to run our modern lifestyles for the past decades 
+    and large amounts of, we wanted to investigate
+    the amounts of co2 that oil has emitted from people the past 31 years. In this analysis we will take a look at the
     average amount of oil we have used since the year 1990 and see wheter this highly
     controversial substance has been an effect in climate change. We will also take
     a look at co2 emission alongside oil."),
@@ -88,7 +88,7 @@ page3_panel <- fluidPage(
     This page will take a look at the most recent year in the dataset, 2021, and analyze
     the top ten countries that could be a factor in identifying the effects of climate change."),
   p(""),
-  h3("Examining the Countries Total Emissions (2021): "),
+  h3("Examining Countries Total Emissions (2021): "),
   p(""),
   mainPanel(
     tabsetPanel(
