@@ -3,7 +3,9 @@ library(plotly)
 library(hrbrthemes)
 source("CleanedDataset.R")
 
-global_df <- read.csv("global_avg_data.csv")
+global_df <- read.csv("unified_avg_data.csv")
+arrangeData_df <- read.csv("arrangeData_2021.csv")
+oil_data_df <- read.csv("oil_Data.csv")
 
 #Home page of the App (Not yet finished)
 home_panel <- fluidPage(
@@ -155,7 +157,7 @@ server <- function(input, output){
 
 #Second page table
   output$table <- renderTable({
-    year_df <- filter(oil_data, Year == input$Years)
+    year_df <- filter(oil_data_df, Year == input$Years)
     return(year_df)
   })
 
@@ -178,7 +180,7 @@ server <- function(input, output){
 
 #Third page (barplot)  
   output$countries_bar <- renderPlotly({
-    country_barplot <- ggplot(arrangeData, aes(x=Country, fill = Country, y=Total)) + 
+    country_barplot <- ggplot(arrangeData_df, aes(x=Country, fill = Country, y=Total)) + 
       geom_bar(stat = "identity")  +
       scale_fill_manual(values = c("red", "blue", "green", "yellow", "orange", "purple", "lightblue", "darkgreen", "white", "gold")) +
       theme(legend.position="none") +
@@ -188,7 +190,7 @@ server <- function(input, output){
 
 #Third page (Table)
   output$ten_table <- renderTable({
-    return(arrangeData)
+    return(arrangeData_df)
   })
   
   
