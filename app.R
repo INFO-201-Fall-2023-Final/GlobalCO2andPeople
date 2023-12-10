@@ -8,8 +8,31 @@ global_df <- read.csv("global_avg_data.csv")
 #Home page of the App (Not yet finished)
 home_panel <- fluidPage(
   h1("Welcome to the home page!"),
-  p("We are anlayzing the effects of people on the effects of CO2 emissions and other
-    related factor.")
+  p("Introduction:
+The rising carbon emissions across the globe is one of the most pressing 
+issues facing our planet and species. The relationship between the sure 
+in carbon emissions over the last three decades and the escalating population 
+is not something that can be ignored. In our analysis between these two issues, 
+we aim to shed light on the ramifications we have and will continue to experience 
+if no changes are made. We have made a dataset which contains information on the 
+rise of the number of humans and carbon emissions from 1990-2021.
+ 
+Why Does This Matter?
+The threat posed by climate change and the exponential rise in global population demands 
+our immediate attention and action. More carbon in our atmosphere is proven to lead to a 
+rise in global warming, shifts in weather patterns, and more extreme weather events. Furthermore, 
+ocean acidification and air pollution are two major factors in the loss of biodiversity and 
+livable conditions. The melting of the ice caps is causing rising sea levels which poses a 
+threat to coastal communities across the globe. Our project aims to find the nuances of the 
+connection between increasing populations and carbon emissions.
+ 
+Why Should You Care?
+Understanding the connection between these two factors is more than an educational endeavor; it’s 
+a call to action for anyone who has the best interest of humans in mind. We hold the ability to 
+shape a sustainable future for our planet and generations yet to come. This project should serve 
+as a wakeup call to start making informed decisions that mitigate the impact of population growth
+and carbon emissions.
+")
 )
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
