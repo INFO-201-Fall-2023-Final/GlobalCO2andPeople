@@ -39,14 +39,14 @@ connection between increasing populations and carbon emissions."),
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
-  titlePanel("Global Average CO2 And Population through 1990"),
+  titlePanel("Global Average CO2 And Population through 1990 to 2021"),
   p("This is an analysis of the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
     our rapid population growth and co2 intake."),
   p("Below we will analyze this through a bubbleplot:"),
   p(""),
-  h3("Examining the trend between 1990 and 2021"),
+  h3("Examining the trend between 1990 and 2021:"),
   sidebarLayout(
     sidebarPanel(
       h4("Controls"),
