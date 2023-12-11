@@ -68,8 +68,11 @@ page1_panel <- fluidPage(
   p("Looking at our graph, there seems to be a strong linear correlation 
     between the the global population and average co2 emissions through the past
     31 years. This could indicate that the rapid growth in population and the need 
-    for co2 in our modern world has an almost 1:1 ratio. This could be a factor and possible
-    indicator for rapid climate change.")
+    for co2 in our modern world has an almost 1:1 ratio. This could possibly mean that
+    since there are more people each year, there is more of a need to use CO2 emitted
+    services to keep with the modern lifestyle. The rise in CO2 is a worrying
+    factor to the health of our enviroment and we should find more things to substitute to mitigate these 
+    harms of climate change.")
 )
 
 #Second Page of the App 
@@ -77,10 +80,9 @@ page2_panel <- fluidPage(
   titlePanel("Average Amount of Oil Through the Years 1990-2021"),
   p("Now let's move on to something most people use: Oil. Since the world has become oil-dependent to run our modern lifestyles, 
     we wanted to investigate the amounts of CO2 that oil has emitted from people the past 31 years. In this analysis, we will take a look at the
-    average amount of oil emissions since the year 1990 and see wheter this highly
+    average amount of oil emissions since the year 1990 and see if this highly
     controversial substance can be seen as a factor in rapid climate change. Lastly, we will 
-    comapre it with the CO2 emissions.
-    a look at co2 emission alongside oil."),
+    comapre it with the CO2 emissions."),
   p(""),
   h3("Examining the Average Oil Emissions Through the Decades:"),
   p(""),
