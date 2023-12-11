@@ -41,14 +41,14 @@ connection between increasing populations and carbon emissions."),
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
-  titlePanel("Global Average CO2 And Population through 1990 to 2021"),
+  titlePanel("Global Average CO2 And Population through 1990"),
   p("This is an analysis of the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
     our rapid population growth and co2 intake."),
   p("Below we will analyze this through a bubbleplot:"),
   p(""),
-  h3("Examining the trend between 1990 and 2021:"),
+  h3("Examining the trend between 1990 and 2021"),
   sidebarLayout(
     sidebarPanel(
       h4("Controls"),
@@ -83,8 +83,14 @@ page2_panel <- fluidPage(
     average amount of oil emissions since the year 1990 and see if this highly
     controversial substance can be seen as a factor in rapid climate change. Lastly, we will 
     comapre it with the CO2 emissions."),
+  p("Since the world has become oil-dependent to run our modern lifestyles for the past decades 
+    and large amounts of, we wanted to investigate
+    the amounts of co2 that oil has emitted from people the past 31 years. In this analysis we will take a look at the
+    average amount of oil we have used since the year 1990 and see wheter this highly
+    controversial substance has been an effect in climate change. We will also take
+    a look at co2 emission alongside oil."),
   p(""),
-  h3("Examining the Average Oil Emissions Through the Decades:"),
+  h3("Examining the Average Oil Through the Years:"),
   p(""),
   sidebarLayout(
     sidebarPanel(
@@ -105,8 +111,13 @@ page2_panel <- fluidPage(
       )
   ),
   h4("Findings"),
-  p("Looking at the ")
-)
+  p("Looking at the two graphs, there is a clear indication of a rapid increase and acceleration in both 
+  emissions from 1995 to 2021. Something that seemed interesting was how there was a large dip around
+  2020, and this is most likely due to the pandemic shutting down travel and CO2 emitted industries. But continuing on with the
+  rapid trend increase in CO2 emissions, this is likely due to a number of factors, including population growth, economic growth, and the increased use of fossil fuels. The burning of fossil fuels releases greenhouse gases into the atmosphere,
+  which trap heat and contribute to climate change.
+  This is a worrying trend, as it suggests that climate change is happening faster than we thought.")
+  )
 
 #Third Page of the App 
 page3_panel <- fluidPage(
@@ -121,16 +132,23 @@ page3_panel <- fluidPage(
   p(""),
   mainPanel(
     tabsetPanel(
-      tabPanel("Barplot", plotlyOutput(outputId = "countries_bar")),
+      tabPanel("Barplot", h4("Countries/CO2 Barplot"), plotlyOutput(outputId = "countries_bar")),
       
       tabPanel("Table",
-               h4(strong("Top 10 Country (2021)")), 
+               h5("2021 Top10 Table"), 
                tableOutput(outputId = "ten_table")
               ),
     ),
     p(""),
     h4("Findings"),
-    p("Write some findings over here")
+    p("China is the top emitter of carbon dioxide gas in the world, with 11,472,369,000 tons emitted in 2021.
+    The United States is the second top emitter, with 5,007,336,000 tons emitted in 2021.
+    India is the third top emitter, with 2,709,683,700 tons emitted in 2021.
+    Russia is the fourth top emitter, with 1,755,547,400 tons emitted in 2021.
+    Japan is the fifth top emitter, with 1,067,398,460 tons emitted in 2021.
+    The top 10 emitting countries account for over 70% of global carbon dioxide emissions.
+    The image also shows that the top 10 emitting countries are all developed countries, with the exception of India and China. This suggests that developed countries have a greater responsibility to reduce their carbon emissions, as they have contributed the most to the problem.
+    Overall, the image shows that carbon dioxide emissions are a global problem, and that all countries need to take action to reduce their emissions.")
   )
 )
 
@@ -149,12 +167,10 @@ server <- function(input, output){
   output$co2_pop <- renderPlotly({
     co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
     co2_pop <- ggplot(co2_pop_filter, aes(x = global_pop, y = avg_co2)) +
-      xlab("Global Population (Billions)") + ylab("Global CO2 Emission (MT)") + 
-      ggtitle("Global Population and CO2") +
       geom_point(size = co2_pop_filter$avg_co2 * .01, aes(col = -avg_co2, alpha = .7)) +
       geom_smooth(method = lm, se = FALSE) +
       labs(
-        color = "Avg CO2 (Mega Tons)"
+        color = "avg_co2"
       )
     plot(co2_pop)
   })
@@ -168,10 +184,9 @@ server <- function(input, output){
 #Second page scatterplot 
   output$plot_oil <- renderPlotly({
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil_co2)) +
-           geom_point(aes(col = avg_oil_co2)) +
-           scale_color_gradient(low = "yellow", high = "red") + geom_line() +
-           xlab("Years") + ylab("Global Oil CO2 Emission (MT)") + 
-           ggtitle("Years and Global Oil Emission") + labs(col = "Oil CO2 Emission (MT)")
+      geom_line() +
+      geom_point(aes(col = avg_oil_co2)) +
+      scale_color_gradient(low = "yellow", high = "red") 
     plot(oil)
   })
   
@@ -179,9 +194,7 @@ server <- function(input, output){
   output$co2_oil <- renderPlotly({
     co2_oil_plot <- ggplot(global_df, aes(x = Year, y = avg_co2)) +
       geom_point(aes(col = avg_co2)) +
-      scale_color_gradient(low = "yellow", high = "red") + geom_line() +xlab("Global Population (Billions)") + ylab("Average CO2 Emission (MMT)") + 
-      xlab("Years") + ylab("Global CO2 Emissions (MT)") + 
-      ggtitle("Years and Global CO2 Emission") + labs(col = "CO2 Emission (MT)")
+      scale_color_gradient(low = "yellow", high = "red") + geom_line()
     plot(co2_oil_plot)
   })
 
@@ -191,8 +204,7 @@ server <- function(input, output){
       geom_bar(stat = "identity")  +
       scale_fill_manual(values = c("red", "blue", "green", "yellow", "orange", "purple", "lightblue", "darkgreen", "white", "gold")) +
       theme(legend.position="none") +
-      coord_flip() + ylab("CO2 Emissions (MT)") + xlab("Countries") + 
-      ggtitle("Top 10 Countries (2021)") 
+      coord_flip()
     plot(country_barplot)
 })
 
