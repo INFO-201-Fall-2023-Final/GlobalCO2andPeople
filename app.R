@@ -75,14 +75,14 @@ page1_panel <- fluidPage(
 #Second Page of the App 
 page2_panel <- fluidPage(
   titlePanel("Average Amount of Oil Through the Years 1990-2021"),
-  p("Since the world has become oil-dependent to run our modern lifestyles for the past decades 
-    and large amounts of, we wanted to investigate
-    the amounts of co2 that oil has emitted from people the past 31 years. In this analysis we will take a look at the
-    average amount of oil we have used since the year 1990 and see wheter this highly
-    controversial substance has been an effect in climate change. We will also take
+  p("Now let's move on to something most people use: Oil. Since the world has become oil-dependent to run our modern lifestyles, 
+    we wanted to investigate the amounts of CO2 that oil has emitted from people the past 31 years. In this analysis, we will take a look at the
+    average amount of oil emissions since the year 1990 and see wheter this highly
+    controversial substance can be seen as a factor in rapid climate change. Lastly, we will 
+    comapre it with the CO2 emissions.
     a look at co2 emission alongside oil."),
   p(""),
-  h3("Examining the Average Oil Through the Years:"),
+  h3("Examining the Average Oil Emissions Through the Decades:"),
   p(""),
   sidebarLayout(
     sidebarPanel(
@@ -103,7 +103,7 @@ page2_panel <- fluidPage(
       )
   ),
   h4("Findings"),
-  p("Write some findings here")
+  p("Looking at the ")
 )
 
 #Third Page of the App 
@@ -119,10 +119,10 @@ page3_panel <- fluidPage(
   p(""),
   mainPanel(
     tabsetPanel(
-      tabPanel("Barplot", h4("Countries/CO2 Barplot"), plotlyOutput(outputId = "countries_bar")),
+      tabPanel("Barplot", plotlyOutput(outputId = "countries_bar")),
       
       tabPanel("Table",
-               h5("2021 Top10 Table"), 
+               h4(strong("Top 10 Country (2021)")), 
                tableOutput(outputId = "ten_table")
               ),
     ),
@@ -147,10 +147,12 @@ server <- function(input, output){
   output$co2_pop <- renderPlotly({
     co2_pop_filter <- filter(global_avg_data, global_pop <= input$pop_slider)
     co2_pop <- ggplot(co2_pop_filter, aes(x = global_pop, y = avg_co2)) +
+      xlab("Global Population (Billions)") + ylab("Global CO2 Emission (MT)") + 
+      ggtitle("Global Population and CO2") +
       geom_point(size = co2_pop_filter$avg_co2 * .01, aes(col = -avg_co2, alpha = .7)) +
       geom_smooth(method = lm, se = FALSE) +
       labs(
-        color = "avg_co2"
+        color = "Avg CO2 (Mega Tons)"
       )
     plot(co2_pop)
   })
@@ -165,7 +167,9 @@ server <- function(input, output){
   output$plot_oil <- renderPlotly({
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil_co2)) +
            geom_point(aes(col = avg_oil_co2)) +
-           scale_color_gradient(low = "yellow", high = "red") + geom_line() 
+           scale_color_gradient(low = "yellow", high = "red") + geom_line() +
+           xlab("Years") + ylab("Global Oil CO2 Emission (MT)") + 
+           ggtitle("Years and Global Oil Emission") + labs(col = "Oil CO2 Emission (MT)")
     plot(oil)
   })
   
@@ -173,7 +177,9 @@ server <- function(input, output){
   output$co2_oil <- renderPlotly({
     co2_oil_plot <- ggplot(global_df, aes(x = Year, y = avg_co2)) +
       geom_point(aes(col = avg_co2)) +
-      scale_color_gradient(low = "yellow", high = "red") + geom_line()
+      scale_color_gradient(low = "yellow", high = "red") + geom_line() +xlab("Global Population (Billions)") + ylab("Average CO2 Emission (MMT)") + 
+      xlab("Years") + ylab("Global CO2 Emissions (MT)") + 
+      ggtitle("Years and Global CO2 Emission") + labs(col = "CO2 Emission (MT)")
     plot(co2_oil_plot)
   })
 
@@ -183,7 +189,8 @@ server <- function(input, output){
       geom_bar(stat = "identity")  +
       scale_fill_manual(values = c("red", "blue", "green", "yellow", "orange", "purple", "lightblue", "darkgreen", "white", "gold")) +
       theme(legend.position="none") +
-      coord_flip()
+      coord_flip() + ylab("CO2 Emissions (MT)") + xlab("Countries") + 
+      ggtitle("Top 10 Countries (2021)") 
     plot(country_barplot)
 })
 
