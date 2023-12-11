@@ -10,6 +10,7 @@ We will incoparte the use of the UI, shiny, to storytell our findings.
 
 Soruces:
 https://www.kaggle.com/datasets/thedevastator/global-fossil-co2-emissions-by-country-2002-2022/?select=GCB2022v27_MtCO2_flat.csv
+
 https://www.kaggle.com/datasets/jarredpriester/global-population
 
 Publication/Website:
