@@ -164,9 +164,8 @@ server <- function(input, output){
 #Second page scatterplot 
   output$plot_oil <- renderPlotly({
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil_co2)) +
-      geom_line() +
-      geom_point(aes(col = avg_oil_co2)) +
-      scale_color_gradient(low = "yellow", high = "red") 
+           geom_point(aes(col = avg_oil_co2)) +
+           scale_color_gradient(low = "yellow", high = "red") + geom_line() 
     plot(oil)
   })
   
