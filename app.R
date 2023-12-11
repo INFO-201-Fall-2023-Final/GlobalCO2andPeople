@@ -6,7 +6,7 @@ source("CleanedDataset.R")
 
 global_df <- read.csv("unified_avg_data.csv")
 arrangeData_df <- read.csv("arrangeData_2021.csv")
-oil_data_df <- read.csv("oil_Data.csv")
+oil_data_df <- read.csv("oil_data.csv")
 
 #Home page of the App 
 home_panel <- fluidPage(
