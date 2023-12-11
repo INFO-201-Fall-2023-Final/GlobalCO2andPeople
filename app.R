@@ -7,7 +7,7 @@ global_df <- read.csv("unified_avg_data.csv")
 arrangeData_df <- read.csv("arrangeData_2021.csv")
 oil_data_df <- read.csv("oil_Data.csv")
 
-#Home page of the App (Not yet finished)
+#Home page of the App 
 home_panel <- fluidPage(
   h1("Welcome!"),
   p(""),
@@ -82,15 +82,9 @@ page2_panel <- fluidPage(
     we wanted to investigate the amounts of CO2 that oil has emitted from people the past 31 years. In this analysis, we will take a look at the
     average amount of oil emissions since the year 1990 and see if this highly
     controversial substance can be seen as a factor in rapid climate change. Lastly, we will 
-    comapre it with the CO2 emissions."),
-  p("Since the world has become oil-dependent to run our modern lifestyles for the past decades 
-    and large amounts of, we wanted to investigate
-    the amounts of co2 that oil has emitted from people the past 31 years. In this analysis we will take a look at the
-    average amount of oil we have used since the year 1990 and see wheter this highly
-    controversial substance has been an effect in climate change. We will also take
-    a look at co2 emission alongside oil."),
+    also take a look at CO2 emissions and comapare both trends."),
   p(""),
-  h3("Examining the Average Oil Through the Years:"),
+  h3("Examining the Average Oil Through the Decades:"),
   p(""),
   sidebarLayout(
     sidebarPanel(
@@ -114,7 +108,7 @@ page2_panel <- fluidPage(
   p("Looking at the two graphs, there is a clear indication of a rapid increase and acceleration in both 
   emissions from 1995 to 2021. Something that seemed interesting was how there was a large dip around
   2020, and this is most likely due to the pandemic shutting down travel and CO2 emitted industries. But continuing on with the
-  rapid trend increase in CO2 emissions, this is likely due to a number of factors, including population growth, economic growth, and the increased use of fossil fuels. The burning of fossil fuels releases greenhouse gases into the atmosphere,
+  rapid trend increase in CO2 emissions, this is likely due to a number of human factors, including population growth, economic growth, and the increased use of fossil fuels. The burning of fossil fuels releases greenhouse gases into the atmosphere,
   which trap heat and contribute to climate change.
   This is a worrying trend, as it suggests that climate change is happening faster than we thought.")
   )
@@ -132,10 +126,10 @@ page3_panel <- fluidPage(
   p(""),
   mainPanel(
     tabsetPanel(
-      tabPanel("Barplot", h4("Countries/CO2 Barplot"), plotlyOutput(outputId = "countries_bar")),
+      tabPanel("Barplot", plotlyOutput(outputId = "countries_bar")),
       
       tabPanel("Table",
-               h5("2021 Top10 Table"), 
+               h5("2021 Top 10 Countries (2021)"), 
                tableOutput(outputId = "ten_table")
               ),
     ),
@@ -170,8 +164,9 @@ server <- function(input, output){
       geom_point(size = co2_pop_filter$avg_co2 * .01, aes(col = -avg_co2, alpha = .7)) +
       geom_smooth(method = lm, se = FALSE) +
       labs(
-        color = "avg_co2"
-      )
+        color = "Avg CO2 (Mega Tons)"
+      ) + xlab("Global Population (Billions)") + ylab("Global CO2 Emission (MT)") + 
+      ggtitle("Global Population and CO2") 
     plot(co2_pop)
   })
 
@@ -186,7 +181,10 @@ server <- function(input, output){
     oil <- ggplot(global_df, aes(x = Year, y = avg_oil_co2)) +
       geom_line() +
       geom_point(aes(col = avg_oil_co2)) +
-      scale_color_gradient(low = "yellow", high = "red") 
+      scale_color_gradient(low = "yellow", high = "red") +
+      scale_color_gradient(low = "yellow", high = "red") + geom_line() +
+      xlab("Years") + ylab("Global Oil CO2 Emission (MT)") + 
+      ggtitle("Years and Global Oil Emission") + labs(col = "Oil CO2 Emission (MT)")
     plot(oil)
   })
   
@@ -194,7 +192,10 @@ server <- function(input, output){
   output$co2_oil <- renderPlotly({
     co2_oil_plot <- ggplot(global_df, aes(x = Year, y = avg_co2)) +
       geom_point(aes(col = avg_co2)) +
-      scale_color_gradient(low = "yellow", high = "red") + geom_line()
+      scale_color_gradient(low = "yellow", high = "red") + geom_line() +
+      xlab("Global Population (Billions)") + ylab("Average CO2 Emission (MMT)") + 
+      xlab("Years") + ylab("Global CO2 Emissions (MT)") + 
+      ggtitle("Years and Global CO2 Emission") + labs(col = "CO2 Emission (MT)")
     plot(co2_oil_plot)
   })
 
@@ -204,7 +205,8 @@ server <- function(input, output){
       geom_bar(stat = "identity")  +
       scale_fill_manual(values = c("red", "blue", "green", "yellow", "orange", "purple", "lightblue", "darkgreen", "white", "gold")) +
       theme(legend.position="none") +
-      coord_flip()
+      coord_flip() + ylab("CO2 Emissions (MT)") + xlab("Countries") + 
+      ggtitle("Top 10 Countries (2021)") 
     plot(country_barplot)
 })
 
