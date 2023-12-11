@@ -9,9 +9,11 @@ oil_data_df <- read.csv("oil_Data.csv")
 
 #Home page of the App 
 home_panel <- fluidPage(
-  h1("Welcome!"),
+  style = "background-color: #f6fef6; width = 100%;",
+  div(titlePanel(em("Climate Change: CO2 and People")), style = "text-align: center;"),
   br(),
-  h3("Introduction: "),
+  div(img(src = "climate.jpg", height = "25%", width = "42%"), style="text-align: center;"),
+  h1(em("Welcome!")),
   p("The rising carbon emissions across the globe is one of the most pressing 
   issues facing our planet and species. The relationship between the sure 
   in carbon emissions over the last three decades and the changes in human factors such as 
@@ -42,6 +44,7 @@ connection between increasing populations and carbon emissions."),
 
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
+  style = "background-color: #f6fef6",
   titlePanel("Global Average CO2 And Population through 1990"),
   p("In this section we will analyze the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
@@ -78,6 +81,7 @@ page1_panel <- fluidPage(
 
 #Second Page of the App 
 page2_panel <- fluidPage(
+  style = "background-color: #f6fef6",
   titlePanel("Average Amount of Oil Through the Years 1990-2021"),
   p("Now let's move on to something most people use: Oil. Since the world has become oil-dependent to run our modern lifestyles, 
     we wanted to investigate the amounts of CO2 that oil has emitted from people the past 31 years. In this analysis, we will take a look at the
@@ -117,6 +121,7 @@ page2_panel <- fluidPage(
 
 #Third Page of the App 
 page3_panel <- fluidPage(
+  style = "background-color: #f6fef6",
   titlePanel("Comparing Top Emitted Countries in 2021"),
   p("Now let's take a look at this CO2 emission problem on a specfic scale. Following
     the trend of looking at the effects of people on the climate, we can now narrow
@@ -139,7 +144,7 @@ page3_panel <- fluidPage(
     h4("Findings"),
     p("Taking a peek at the chart, China is the top emitter of carbon dioxide gas in the world, with 11,472 MT emitted in 2021, while
     the United States is the second top emitter, with 5,007 MT emitted in 2021. It's really suprising to see a significant margin between these two, but this can be explained
-    due to China's manufacturing and producing large amouts of the world's goods.
+    due to China's manufacturing and producing large percentage of the world's goods.
     Furthermore, this chart clearly shows that the top 10 emitting countries are all mostly developed countries and all have played a signifcant part in contributing to the world's growth.
     This indicates that these developed countries should find better solutions to reduce their carbon emissions, as they have contributed the most to the problem.
     Overall, this data shows that carbon dioxide emissions are a global problem, and that all countries need to take action to reduce their emissions.")
