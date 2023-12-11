@@ -10,17 +10,18 @@ oil_data_df <- read.csv("oil_Data.csv")
 #Home page of the App 
 home_panel <- fluidPage(
   h1("Welcome!"),
-  p(""),
+  br(),
   h3("Introduction: "),
   p("The rising carbon emissions across the globe is one of the most pressing 
   issues facing our planet and species. The relationship between the sure 
-  in carbon emissions over the last three decades and the escalating population 
+  in carbon emissions over the last three decades and the changes in human factors such as 
+  the escalating population, new materials, and modern practices
   is not something that can be ignored. In our analysis between these two issues, 
   we aim to shed light on the ramifications we have and will continue to experience 
   if no changes are made. We have made a dataset which contains information on the 
-  rise of the number of humans and carbon emissions from 1990-2021."),
+  rise of population and carbon emissions from 1990-2021."),
   
-  p(""),
+  br(),
   h3("Why Does This Matter?"),
   p("The threat posed by climate change and the exponential rise in global population demands 
 our immediate attention and action. More carbon in our atmosphere is proven to lead to a 
@@ -30,7 +31,7 @@ livable conditions. The melting of the ice caps is causing rising sea levels whi
 threat to coastal communities across the globe. Our project aims to find the nuances of the 
 connection between increasing populations and carbon emissions."),
 
-  p(""),
+  br(),
   h3("Why Should You Care?"),
   p("Understanding the connection between these two factors is more than an educational endeavor; it’s 
   a call to action for anyone who has the best interest of humans in mind. We hold the ability to 
@@ -42,12 +43,12 @@ connection between increasing populations and carbon emissions."),
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
   titlePanel("Global Average CO2 And Population through 1990"),
-  p("This is an analysis of the Global Population growth and Average CO2 Emission 
+  p("In this section we will analyze the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
-    our rapid population growth and co2 intake."),
+    our rapid population growth and CO2 intake."),
   p("Below we will analyze this through a bubbleplot:"),
-  p(""),
+  br(),
   h3("Examining the trend between 1990 and 2021"),
   sidebarLayout(
     sidebarPanel(
@@ -66,9 +67,9 @@ page1_panel <- fluidPage(
   ),
   h4("Findings"),
   p("Looking at our graph, there seems to be a strong linear correlation 
-    between the the global population and average co2 emissions through the past
+    between the the global population and average CO2 emissions through the past
     31 years. This could indicate that the rapid growth in population and the need 
-    for co2 in our modern world has an almost 1:1 ratio. This could possibly mean that
+    for CO2 in our modern world has an almost 1:1 ratio. This could possibly mean that
     since there are more people each year, there is more of a need to use CO2 emitted
     services to keep with the modern lifestyle. The rise in CO2 is a worrying
     factor to the health of our enviroment and we should find more things to substitute to mitigate these 
@@ -83,9 +84,9 @@ page2_panel <- fluidPage(
     average amount of oil emissions since the year 1990 and see if this highly
     controversial substance can be seen as a factor in rapid climate change. Lastly, we will 
     also take a look at CO2 emissions and comapare both trends."),
-  p(""),
+  br(),
   h3("Examining the Average Oil Through the Decades:"),
-  p(""),
+  br(),
   sidebarLayout(
     sidebarPanel(
   selectInput(
@@ -106,11 +107,12 @@ page2_panel <- fluidPage(
   ),
   h4("Findings"),
   p("Looking at the two graphs, there is a clear indication of a rapid increase and acceleration in both 
-  emissions from 1995 to 2021. Something that seemed interesting was how there was a large dip around
+  emissions from 1990 to 2021. Something that seemed interesting was how there was a large dip around
   2020, and this is most likely due to the pandemic shutting down travel and CO2 emitted industries. But continuing on with the
   rapid trend increase in CO2 emissions, this is likely due to a number of human factors, including population growth, economic growth, and the increased use of fossil fuels. The burning of fossil fuels releases greenhouse gases into the atmosphere,
   which trap heat and contribute to climate change.
-  This is a worrying trend, as it suggests that climate change is happening faster than we thought.")
+  This is a worrying trend, as it suggests that climate change is happening faster than we thought, and we should figure out alternatives such
+  as clean energy to potenitally fix this.")
   )
 
 #Third Page of the App 
@@ -121,9 +123,9 @@ page3_panel <- fluidPage(
     down our focus at countries that have contributed the most in the CO2 industry.
     This page will take a look at the most recent year in the dataset, 2021, and analyze
     the top ten countries that could be a factor in identifying the effects of climate change."),
-  p(""),
+  br(),
   h3("Examining Countries Total Emissions (2021): "),
-  p(""),
+  br(),
   mainPanel(
     tabsetPanel(
       tabPanel("Barplot", plotlyOutput(outputId = "countries_bar")),
@@ -133,16 +135,14 @@ page3_panel <- fluidPage(
                tableOutput(outputId = "ten_table")
               ),
     ),
-    p(""),
+    br(),
     h4("Findings"),
-    p("China is the top emitter of carbon dioxide gas in the world, with 11,472,369,000 tons emitted in 2021.
-    The United States is the second top emitter, with 5,007,336,000 tons emitted in 2021.
-    India is the third top emitter, with 2,709,683,700 tons emitted in 2021.
-    Russia is the fourth top emitter, with 1,755,547,400 tons emitted in 2021.
-    Japan is the fifth top emitter, with 1,067,398,460 tons emitted in 2021.
-    The top 10 emitting countries account for over 70% of global carbon dioxide emissions.
-    The image also shows that the top 10 emitting countries are all developed countries, with the exception of India and China. This suggests that developed countries have a greater responsibility to reduce their carbon emissions, as they have contributed the most to the problem.
-    Overall, the image shows that carbon dioxide emissions are a global problem, and that all countries need to take action to reduce their emissions.")
+    p("Taking a peek at the chart, China is the top emitter of carbon dioxide gas in the world, with 11,472 MT emitted in 2021, while
+    the United States is the second top emitter, with 5,007 MT emitted in 2021. It's really suprising to see a significant margin between these two, but this can be explained
+    due to China's manufacturing and producing large amouts of the world's goods.
+    Furthermore, this chart clearly shows that the top 10 emitting countries are all mostly developed countries and all have played a signifcant part in contributing to the world's growth.
+    This indicates that these developed countries should find better solutions to reduce their carbon emissions, as they have contributed the most to the problem.
+    Overall, this data shows that carbon dioxide emissions are a global problem, and that all countries need to take action to reduce their emissions.")
   )
 )
 

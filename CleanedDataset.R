@@ -10,7 +10,7 @@ pop_df <- read.csv("population.csv")
 
 #Joins in dataframes
 df <- merge(emission_df, pop_df, by = "Year", all = TRUE)
-df <- (filter(df, Year >= 1995))
+df <- (filter(df, Year >= 1990))
 df <- select(df, !ISO.3166.1.alpha.3)
 df <- select(df, !X)
 
