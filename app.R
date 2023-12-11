@@ -1,6 +1,7 @@
 library(shiny)
 library(plotly)
 library(hrbrthemes)
+library(rsconnect)
 source("CleanedDataset.R")
 
 global_df <- read.csv("unified_avg_data.csv")
@@ -45,7 +46,7 @@ connection between increasing populations and carbon emissions."),
 #First page analyzing the Global CO2 and Population Growth (1990-2021)
 page1_panel <- fluidPage(
   style = "background-color: #f6fef6",
-  titlePanel("Global Average CO2 And Population through 1990"),
+  titlePanel(em("Global Average CO2 And Population through 1990")),
   p("In this section we will analyze the Global Population growth and Average CO2 Emission 
     through the years of 1990 to 2021! Since the world has grown so rapidly we wanted
     to examine wheter the rapid effects of climate change has been affected due to
@@ -68,7 +69,7 @@ page1_panel <- fluidPage(
       plotlyOutput(outputId = "co2_pop"),
     ),
   ),
-  h4("Findings"),
+  h3("Findings"),
   p("Looking at our graph, there seems to be a strong linear correlation 
     between the the global population and average CO2 emissions through the past
     31 years. This could indicate that the rapid growth in population and the need 
@@ -82,7 +83,7 @@ page1_panel <- fluidPage(
 #Second Page of the App 
 page2_panel <- fluidPage(
   style = "background-color: #f6fef6",
-  titlePanel("Average Amount of Oil Through the Years 1990-2021"),
+  titlePanel(em("Average Amount of Oil Through the Years 1990-2021")),
   p("Now let's move on to something most people use: Oil. Since the world has become oil-dependent to run our modern lifestyles, 
     we wanted to investigate the amounts of CO2 that oil has emitted from people the past 31 years. In this analysis, we will take a look at the
     average amount of oil emissions since the year 1990 and see if this highly
@@ -109,7 +110,7 @@ page2_panel <- fluidPage(
         plotlyOutput(outputId = "co2_oil")
       )
   ),
-  h4("Findings"),
+  h3("Findings"),
   p("Looking at the two graphs, there is a clear indication of a rapid increase and acceleration in both 
   emissions from 1990 to 2021. Something that seemed interesting was how there was a large dip around
   2020, and this is most likely due to the pandemic shutting down travel and CO2 emitted industries. But continuing on with the
@@ -122,7 +123,7 @@ page2_panel <- fluidPage(
 #Third Page of the App 
 page3_panel <- fluidPage(
   style = "background-color: #f6fef6",
-  titlePanel("Comparing Top Emitted Countries in 2021"),
+  titlePanel(em("Comparing Top Emitted Countries in 2021")),
   p("Now let's take a look at this CO2 emission problem on a specfic scale. Following
     the trend of looking at the effects of people on the climate, we can now narrow
     down our focus at countries that have contributed the most in the CO2 industry.
@@ -141,7 +142,7 @@ page3_panel <- fluidPage(
               ),
     ),
     br(),
-    h4("Findings"),
+    h3("Findings"),
     p("Taking a peek at the chart, China is the top emitter of carbon dioxide gas in the world, with 11,472 MT emitted in 2021, while
     the United States is the second top emitter, with 5,007 MT emitted in 2021. It's really suprising to see a significant margin between these two, but this can be explained
     due to China's manufacturing and producing large percentage of the world's goods.
